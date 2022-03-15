@@ -19,7 +19,7 @@ export class AppService {
 
     addBookForm() {
         return this.catalogFormBuilder.group({
-            id: ['', Validators.required],
+            id: [{ value: this.generateBookId(), disabled: true }, Validators.required],
             author: this.catalogFormBuilder.group({
                 firstname: ['', Validators.required],
                 lastname: ['', Validators.required],
@@ -59,7 +59,7 @@ export class AppService {
         this.bookArray = this.catalogFormBuilder.array([], { updateOn: 'blur' });
         for (const book of xmlData) {
             this.bookArray.push(this.catalogFormBuilder.group({
-                id: [book.id, Validators.required],
+                id: [{ value: book.id, disabled: true }, Validators.required],
                 author: this.catalogFormBuilder.group({
                     firstname: [book.author.firstname, Validators.required],
                     lastname: [book.author.lastname, Validators.required],
@@ -90,4 +90,14 @@ export class AppService {
     clearPreviousXMLData() {
         this.catalog = [];
     }
+
+    generateBookId() {
+        if (this.catalog.length) {
+            let lastId = this.catalog[this.catalog.length - 1].id;
+            return 'bk' + (<number><unknown>(lastId.slice(2)) + 1);
+        } else {
+            return 'bk101';
+        }
+    }
 }
+
