@@ -34,7 +34,7 @@ export class ReadXmlComponent implements OnInit {
       parseString(xmlData, function (err: any, result: any) {
         console.dir(result);
         if (err != null) {
-          self.errorMessage = 'Error in file upload.';
+          self.errorMessage = 'Error in file upload, .xml files are allowed.';
           return;
         }
         if (result.catalog.book.length) {
@@ -65,7 +65,7 @@ export class ReadXmlComponent implements OnInit {
               description: book.description[0]
             }
             self.appService.catalog.push(currentBook);
-            self.router.navigate(['create-catalog']);
+            //self.router.navigate(['create-catalog']);
           });
         } else {
           self.errorMessage = "No catalog data found.";
@@ -74,5 +74,8 @@ export class ReadXmlComponent implements OnInit {
     };
     reader.readAsText(file);
     console.log(reader.readAsText(file));
+  }
+  generateForm() {
+    this.router.navigate(['create-catalog']);
   }
 }

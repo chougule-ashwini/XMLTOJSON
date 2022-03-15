@@ -1,7 +1,12 @@
-<h1 class="page-header">Upload XML File</h1>
-
+<h1 class="page-header">Upload File</h1>
+<p>Upload XML file</p>
 <input type='file' accept='text/xml' id="file-input" (change)="readXMLFile($event)" />
-<p *ngIf="errorMessage !== ''">{{errorMessage}}</p>
+<div>
+    <button type="button" *ngIf="appService.catalog.length" class="btn btn-primary mt-4 mb-2"
+        (click)="generateForm()">Generate
+        Form</button>
+</div>
+<p *ngIf="errorMessage !== ''" class="text-danger mt-1">{{errorMessage}}</p>
 <ul class="list-group" *ngIf="appService.catalog.length">
     <li class="list-group-item" *ngFor="let book of appService.catalog">
         <pre>{{ book|json }}</pre>
