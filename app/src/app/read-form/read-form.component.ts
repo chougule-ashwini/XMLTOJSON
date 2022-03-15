@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-read-form',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReadFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appService: AppService) { }
 
   ngOnInit(): void {
+    if (this.appService.catalog.length)
+      this.appService.getCatalogFormData(this.appService.catalog);
   }
-
 }

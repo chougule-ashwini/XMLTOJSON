@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AppService } from "../app.service";
-import { BookFormSchema } from "../read-form/read-form.model";
+import { BookFormSchema } from "../app.model";
 declare const require: any;
 var parseString = require('xml2js').parseString;
 
@@ -16,12 +16,13 @@ export class ReadXmlComponent implements OnInit {
   constructor(public appService: AppService, private router: Router) { }
 
   ngOnInit() {
-
+    this.appService.clearPreviousXMLData();
   }
 
   readXMLFile(e: any) {
     let self = this;
     self.errorMessage = '';
+    this.appService.clearPreviousXMLData();
     const file = e.target.files[0];
     if (!file) {
       return;
