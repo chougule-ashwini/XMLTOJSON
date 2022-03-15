@@ -1,2 +1,11 @@
-<input type="file" accept="xml" />
-<button type="button" (click)="readXML()">Generate Form</button>
+<div class="container">
+    <label>Upload XML File:</label>
+    <input type='file' accept='text/xml' id="file-input" (change)="readXMLFile($event)" />
+
+    <ul class="list-group" *ngIf="catalog">
+        <li class="list-group-item" *ngFor="let book of catalog">
+            <pre>{{ book|json }}</pre>
+            <hr />
+        </li>
+    </ul>
+</div>
