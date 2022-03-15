@@ -24,4 +24,8 @@ export class ReadFormComponent implements OnInit {
   getCatalogJSON() {
     alert('Final JSON: ' + JSON.stringify(this.appService.bookArray.value));
   }
+
+  addBookForm() {
+    this.appService.bookArray.push(this.appService.addBookForm());
+  }
 }

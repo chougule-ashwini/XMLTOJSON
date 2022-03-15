@@ -1,79 +1,192 @@
-<h1 class="page-header">Create Catalog</h1>
+<div class="d-flex justify-content-between">
+    <h1 class="page-header">Create Catalog</h1>
+    <div>
+        <button type="button" class="btn btn-primary mt-4" (click)="addBookForm()">+
+            Add Book</button>
+    </div>
+</div>
 
 <ul class="list-group">
     <li class="list-group-item" *ngFor="let bookFormGroup of appService.bookArray.controls; let i = index;">
+        <div class="form-title">Book {{i+1}}</div>
         <form [formGroup]="getFormGroupAt(i)" [id]="'bookFormGroup'+ i">
-            <label [for]="'id'+ i">Book Id: </label>
-            <input [id]="'id'+ i" type="text" formControlName="id">
-
-            <div formGroupName="author">
-                <h2>Author</h2>
-
-                <label [for]="'firstname'+ i">First Name: </label>
-                <input [id]="'firstname'+ i" type="text" formControlName="firstname">
-
-                <label [for]="'lastname'+ i">Last Name: </label>
-                <input [id]="'lastname'+ i" type="text" formControlName="lastname">
-
-                <label [for]="'gender'+ i">Gender: </label>
-                <select [id]="'gender'+ i" formControlName="gender">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-            </div>
-            <div formGroupName="publication">
-                <h2>Publication</h2>
-
-                <label [for]="'name'+ i">Name: </label>
-                <input [id]="'name'+ i" type="text" formControlName="name">
-
-                <label [for]="'website'+ i">Website: </label>
-                <input [id]="'website'+ i" type="text" formControlName="website">
-
-                <label [for]="'phone'+ i">Phone: </label>
-                <input [id]="'phone'+ i" type="text" formControlName="phone">
-
-                <label [for]="'email'+ i">Email: </label>
-                <input [id]="'email'+ i" type="email" formControlName="email">
-
-                <div formGroupName="address">
-                    <h2>Address</h2>
-
-                    <label [for]="'street'+ i">Street: </label>
-                    <input [id]="'street'+ i" type="text" formControlName="street">
-
-                    <label [for]="'city'+ i">City: </label>
-                    <input [id]="'city'+ i" type="text" formControlName="city">
-
-                    <label [for]="'country'+ i">Country: </label>
-                    <input [id]="'country'+ i" type="text" formControlName="country">
-
-                    <label [for]="'zip'+ i">Zip Code: </label>
-                    <input [id]="'zip'+ i" type="text" formControlName="zip">
+            <div class="row mb-3 justify-content-end">
+                <label class="col-2" [for]="'id'+ i">Book Id: </label>
+                <div class="col-3">
+                    <input [id]="'id'+ i" type="text" class="form-control" formControlName="id">
                 </div>
             </div>
 
-            <label [for]="'title'+ i">Title: </label>
-            <input [id]="'title'+ i" type="text" formControlName="title">
+            <div formGroupName="author">
+                <h2 class="section-header">Author</h2>
 
-            <label [for]="'genre'+ i">genre: </label>
-            <select [id]="'genre'+ i" formControlName="genre">
-                <option value="Horror">Horror</option>
-                <option value="Romance">Romance</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Computer">Computer</option>
-                <option value="Fantasy">Fantasy</option>
-            </select>
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-3">
+                            <label class="col-5" [for]="'firstname'+ i">First Name: </label>
+                            <div class="col-7">
+                                <input [id]="'firstname'+ i" type="text" class="form-control"
+                                    formControlName="firstname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row mb-3">
+                            <label class="col-5" [for]="'lastname'+ i">Last Name: </label>
+                            <div class="col-7">
+                                <input [id]="'lastname'+ i" type="text" class="form-control" formControlName="lastname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row mb-3">
+                            <label class="col-5" [for]="'gender'+ i">Gender: </label>
+                            <div class="col-7">
+                                <select class="form-control" [id]="'gender'+ i" formControlName="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <label [for]="'price'+ i">Price: </label>
-            <input [id]="'price'+ i" type="text" formControlName="price">
+            <div formGroupName="publication">
+                <h2 class="section-header">Publication</h2>
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-3">
+                            <label class="col-4" [for]="'name'+ i">Name: </label>
+                            <div class="col-8">
+                                <input [id]="'name'+ i" type="text" class="form-control" formControlName="name">
+                            </div>
+                        </div>
+                    </div>
 
-            <label [for]="'publish_date'+ i">Publish Date: </label>
-            <input [id]="'publish_date'+ i" type="date" formControlName="publish_date">
+                    <div class="col">
+                        <div class="row mb-3">
+                            <label class="col-4" [for]="'website'+ i">Website: </label>
+                            <div class="col-8">
+                                <input [id]="'website'+ i" type="text" class="form-control" formControlName="website">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-3">
+                            <label class="col-4" [for]="'phone'+ i">Phone: </label>
+                            <div class="col-8">
+                                <input [id]="'phone'+ i" type="text" class="form-control" formControlName="phone">
+                            </div>
+                        </div>
+                    </div>
 
-            <label [for]="'description'+ i">Description: </label>
-            <textarea [id]="'description'+ i" formControlName="description"></textarea>
+                    <div class="col">
+                        <div class="row mb-3">
+                            <label class="col-4" [for]="'email'+ i">Email: </label>
+                            <div class="col-8">
+                                <input [id]="'email'+ i" type="email" class="form-control" formControlName="email">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div formGroupName="address">
+                    <h2 class="section-header">Address</h2>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row mb-3">
+                                <label class="col-4" [for]="'street'+ i">Street: </label>
+                                <div class="col-8">
+                                    <input [id]="'street'+ i" type="text" class="form-control" formControlName="street">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row mb-3">
+                                <label class="col-4" [for]="'city'+ i">City: </label>
+                                <div class="col-8">
+                                    <input [id]="'city'+ i" type="text" class="form-control" formControlName="city">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row mb-3">
+                                <label class="col-4" [for]="'country'+ i">Country: </label>
+                                <div class="col-8">
+                                    <input [id]="'country'+ i" type="text" class="form-control"
+                                        formControlName="country">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row mb-3">
+                                <label class="col-4" [for]="'zip'+ i">Zip Code: </label>
+                                <div class="col-8">
+                                    <input [id]="'zip'+ i" type="text" class="form-control" formControlName="zip">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="row mb-3">
+                        <label class="col-4" [for]="'title'+ i">Title: </label>
+                        <div class="col-8">
+                            <input [id]="'title'+ i" type="text" class="form-control" formControlName="title">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="row mb-3">
+                        <label class="col-4" [for]="'genre'+ i">Genre: </label>
+                        <div class="col-8">
+                            <select class="form-control" [id]="'genre'+ i" formControlName="genre">
+                                <option value="Horror">Horror</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Science Fiction">Science Fiction</option>
+                                <option value="Computer">Computer</option>
+                                <option value="Fantasy">Fantasy</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="row mb-3">
+                        <label class="col-4" [for]="'price'+ i">Price: </label>
+                        <div class="col-8">
+                            <input [id]="'price'+ i" type="text" class="form-control" formControlName="price">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row mb-3">
+                        <label class="col-4" [for]="'publish_date'+ i">Publish Date: </label>
+                        <div class="col-8">
+                            <input [id]="'publish_date'+ i" type="date" class="form-control"
+                                formControlName="publish_date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <label class="col-2" [for]="'description'+ i">Description: </label>
+                <div class="col-8">
+                    <textarea [id]="'description'+ i" class="form-control" formControlName="description"></textarea>
+                </div>
+            </div>
         </form>
     </li>
 </ul>
-<button type="button" [disabled]="appService.bookArray.invalid" (click)="getCatalogJSON()">Get Catalog JSON</button>
+<button type="button" class="btn btn-primary mt-2 mb-2" [disabled]="appService.bookArray.invalid"
+    (click)="getCatalogJSON()">Get Catalog JSON</button>

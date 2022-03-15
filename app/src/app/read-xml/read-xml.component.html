@@ -1,4 +1,5 @@
-<label>Upload XML File:</label>
+<h1 class="page-header">Upload XML File</h1>
+
 <input type='file' accept='text/xml' id="file-input" (change)="readXMLFile($event)" />
 <p *ngIf="errorMessage !== ''">{{errorMessage}}</p>
 <ul class="list-group" *ngIf="appService.catalog.length">
