@@ -16,12 +16,11 @@ var parseString = require('xml2js').parseString;
 export class ReadXmlComponent implements OnInit {
   public errorMessage = '';
 
-  displayedColumns: string[] = ['select', 'title', 'author', 'publication', 'price'];
+  public displayedColumns: string[] = ['select', 'title', 'author', 'publication', 'price'];
   public dataSource!: MatTableDataSource<BookFormSchema>;
-  selection = new SelectionModel<BookFormSchema>(true, []);
-
+  public selection = new SelectionModel<BookFormSchema>(true, []);
+  public showIcon: boolean = false;
   constructor(public appService: AppService, private router: Router) { }
-
   ngOnInit() {
     //this.appService.clearPreviousXMLData();
     if (this.appService.catalog.length)
@@ -47,6 +46,8 @@ export class ReadXmlComponent implements OnInit {
           return;
         }
         if (result.catalog.book.length) {
+          self.showIcon = true;
+
           result.catalog.book.forEach((book: any, index: number) => {
             let currentBook: BookFormSchema = {
               id: book.$.id,
@@ -120,5 +121,9 @@ export class ReadXmlComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id}`;
+  }
+
+  getCatalogJSON() {
+    alert(JSON.stringify(this.appService.catalog));
   }
 }

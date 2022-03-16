@@ -11,12 +11,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadXmlComponent,
-    ReadFormComponent
+    ReadFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +27,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatButtonModule,
     MatTableModule,
     MatCheckboxModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
