@@ -1,14 +1,77 @@
-<h1 class="page-header">Upload File</h1>
-<p>Upload XML file</p>
-<input type='file' accept='text/xml' id="file-input" (change)="readXMLFile($event)" />
-<div>
-    <button type="button" *ngIf="appService.catalog.length" class="btn btn-primary mt-4 mb-2"
-        (click)="generateForm()">Generate
-        Form</button>
+<div class="card">
+    <div class="card-body">
+        <h1 class="page-header">Upload File</h1>
+
+        <input #xmlInput hidden="true" type="file" id="file-input" onclick="this.value=null"
+            (change)="readXMLFile($event)" accept='text/xml' />
+        <button mat-flat-button color="primary" (click)="xmlInput.click()">Choose XML File</button>
+        <p *ngIf="errorMessage !== ''" class="text-danger mt-1">{{errorMessage}}</p>
+
+        <hr *ngIf="appService.catalog.length" />
+
+        <div class="d-flex justify-content-between" *ngIf="appService.catalog.length">
+            <h2 class="section-header">Select row/s to edit the book record/s</h2>
+            <div>
+                <button type="button" mat-flat-button color="primary" (click)="generateForm()"
+                    [disabled]="selection.selected.length == 0"
+                    [title]="selection.selected.length == 0 ? 'Select atleast one row.' : 'Edit Records'">Update
+                    Books</button>
+                <button type="button" mat-flat-button color="accent" (click)="addForm()">+ Add
+                    Book</button>
+            </div>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" class="table" *ngIf="appService.catalog.length">
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef> Title </th>
+                <td mat-cell *matCellDef="let book"> {{book.title}} </td>
+            </ng-container>
+
+            <!-- Author Column -->
+            <ng-container matColumnDef="author">
+                <th mat-header-cell *matHeaderCellDef> Author </th>
+                <td mat-cell *matCellDef="let book"> {{book.author.firstname +' '+ book.author.lastname}} </td>
+            </ng-container>
+
+            <!-- Publication Column -->
+            <ng-container matColumnDef="publication">
+                <th mat-header-cell *matHeaderCellDef> Publication </th>
+                <td mat-cell *matCellDef="let book">
+                    <p>Name: {{book.publication.name}}</p>
+                    <p>Website: <a href="{{book.publication.website}}" target="_blank">{{book.publication.website}}</a>
+                    </p>
+                    <p>Email: <a href="mailto:{{book.publication.email}}">{{book.publication.email}}</a></p>
+                    <p> Phone: {{book.publication.phone}} </p>
+                </td>
+            </ng-container>
+
+            <!-- Price Column -->
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> Price </th>
+                <td mat-cell *matCellDef="let book"> {{book.price | currency}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+            </tr>
+        </table>
+
+    </div>
 </div>
-<p *ngIf="errorMessage !== ''" class="text-danger mt-1">{{errorMessage}}</p>
-<ul class="list-group" *ngIf="appService.catalog.length">
-    <li class="list-group-item" *ngFor="let book of appService.catalog">
-        <pre>{{ book|json }}</pre>
-    </li>
-</ul>

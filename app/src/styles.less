@@ -11,6 +11,56 @@ h1.page-header {
 
 h2.section-header {
   font-size: 18px;
-  background: #eee;
   padding: 3px 10px 7px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+button.mat-flat-button {
+  display: inline-block;
+  margin: 10px;
+}
+
+button.mat-flat-button:first-child {
+  margin-left: 0;
+}
+
+button.mat-flat-button:last-child {
+  margin-right: 0;
+}
+
+/* mat expansion */
+.mat-expansion-panel-header,
+.mat-expansion-panel-header:focus,
+.mat-expansion-panel-header:hover {
+  background-color: gray;
+
+  .mat-expansion-panel-header-title {
+    color: #fff;
+    font-size: 20px;
+  }
+}
+
+.book-header:hover {
+  background-color: gray !important;
+}
+
+/* mat table */
+.mat-header-cell {
+  background: gray !important;
+  color: #fff;
+  font-size: 16px;
+}
+
+.mat-header-cell,
+.mat-cell {
+  vertical-align: middle;
 }

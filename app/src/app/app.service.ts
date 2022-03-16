@@ -7,6 +7,8 @@ import { BookFormSchema } from "./app.model";
 })
 export class AppService {
     public catalog: BookFormSchema[] = [];
+    public selectedBooks: BookFormSchema[] = [];
+    public lastBookId = '';
 
     public bookArray!: FormArray;
     constructor(private catalogFormBuilder: FormBuilder,) { }
@@ -19,7 +21,7 @@ export class AppService {
 
     addBookForm() {
         return this.catalogFormBuilder.group({
-            id: [{ value: this.generateBookId(), disabled: true }, Validators.required],
+            id: [this.generateBookId(), Validators.required],
             author: this.catalogFormBuilder.group({
                 firstname: ['', Validators.required],
                 lastname: ['', Validators.required],
@@ -59,7 +61,7 @@ export class AppService {
         this.bookArray = this.catalogFormBuilder.array([], { updateOn: 'blur' });
         for (const book of xmlData) {
             this.bookArray.push(this.catalogFormBuilder.group({
-                id: [{ value: book.id, disabled: true }, Validators.required],
+                id: [book.id, Validators.required],
                 author: this.catalogFormBuilder.group({
                     firstname: [book.author.firstname, Validators.required],
                     lastname: [book.author.lastname, Validators.required],
@@ -89,15 +91,18 @@ export class AppService {
     }
     clearPreviousXMLData() {
         this.catalog = [];
+        this.selectedBooks = [];
     }
 
     generateBookId() {
-        if (this.catalog.length) {
+        if (this.catalog.length && this.lastBookId == '') {
             let lastId = this.catalog[this.catalog.length - 1].id;
-            return 'bk' + (<number><unknown>(lastId.slice(2)) + 1);
-        } else {
-            return 'bk101';
-        }
+            this.lastBookId = 'bk' + (Number(lastId.slice(2)) + 1);
+            return this.lastBookId;
+        } else if (this.lastBookId != '') {
+            let lastId = this.lastBookId;
+            this.lastBookId = 'bk' + (Number(lastId.slice(2)) + 1);
+            return this.lastBookId;
+        } else return 'bk101';
     }
 }
-

@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AppService } from "../app.service";
 import { BookFormSchema } from "../app.model";
+import { MatTableDataSource } from "@angular/material/table";
+import { SelectionModel } from "@angular/cdk/collections";
 declare const require: any;
 var parseString = require('xml2js').parseString;
 
@@ -13,10 +15,17 @@ var parseString = require('xml2js').parseString;
 
 export class ReadXmlComponent implements OnInit {
   public errorMessage = '';
+
+  displayedColumns: string[] = ['select', 'title', 'author', 'publication', 'price'];
+  public dataSource!: MatTableDataSource<BookFormSchema>;
+  selection = new SelectionModel<BookFormSchema>(true, []);
+
   constructor(public appService: AppService, private router: Router) { }
 
   ngOnInit() {
-    this.appService.clearPreviousXMLData();
+    //this.appService.clearPreviousXMLData();
+    if (this.appService.catalog.length)
+      this.dataSource = new MatTableDataSource(this.appService.catalog);
   }
 
   readXMLFile(e: any) {
@@ -66,6 +75,7 @@ export class ReadXmlComponent implements OnInit {
             }
             self.appService.catalog.push(currentBook);
             //self.router.navigate(['create-catalog']);
+            self.dataSource = new MatTableDataSource(self.appService.catalog);
           });
         } else {
           self.errorMessage = "No catalog data found.";
@@ -75,7 +85,40 @@ export class ReadXmlComponent implements OnInit {
     reader.readAsText(file);
     console.log(reader.readAsText(file));
   }
+
   generateForm() {
+    console.log(this.selection.selected);
+    this.appService.selectedBooks = this.selection.selected;
     this.router.navigate(['create-catalog']);
+  }
+
+  addForm() {
+    this.appService.selectedBooks = [];
+    this.router.navigate(['create-catalog']);
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: BookFormSchema): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id}`;
   }
 }

@@ -1,15 +1,23 @@
+<h1 class="page-header">Create Catalog</h1>
+
 <div class="d-flex justify-content-between">
-    <h1 class="page-header">Create Catalog</h1>
-    <div>
-        <button type="button" class="btn btn-primary mt-4" (click)="addBookForm()">+
-            Add Book</button>
+    <button type="button" mat-flat-button color="accent" (click)="addBookForm()">+
+        Add Book</button>
+    <div class="example-action-buttons">
+        <button type="button" mat-flat-button color="primary" (click)="accordion.openAll()">Expand All</button>
+        <button type="button" mat-flat-button color="primary" (click)="accordion.closeAll()">Collapse All</button>
     </div>
 </div>
 
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let bookFormGroup of appService.bookArray.controls; let i = index;">
-        <div class="form-title">Book {{i+1}}</div>
-        <form [formGroup]="getFormGroupAt(i)" [id]="'bookFormGroup'+ i">
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel *ngFor="let bookFormGroup of appService.bookArray.controls; let i = index; let isFirst = first"
+        [expanded]="isFirst">
+        <mat-expansion-panel-header class="book-header">
+            <mat-panel-title>
+                Book {{i+1}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="getFormGroupAt(i)" class="mt-2" [id]="'bookFormGroup'+ i">
             <div class="row mb-3 justify-content-end">
                 <label class="col-2" [for]="'id'+ i">Book Id: </label>
                 <div class="col-3">
@@ -186,7 +194,12 @@
                 </div>
             </div>
         </form>
-    </li>
-</ul>
-<button type="button" class="btn btn-primary mt-2 mb-2" [disabled]="appService.bookArray.invalid"
-    (click)="getCatalogJSON()">Get Catalog JSON</button>
+    </mat-expansion-panel>
+</mat-accordion>
+<div>
+    <button type="button" mat-flat-button color="accent" [disabled]="appService.bookArray.invalid"
+        (click)="getCatalogJSON()">Get Catalog JSON</button>
+    <button type="button" mat-flat-button color="primary" [disabled]="appService.bookArray.invalid"
+        (click)="submitForm()">
+        Submit</button>
+</div>
